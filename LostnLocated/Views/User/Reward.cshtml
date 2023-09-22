@@ -1,0 +1,96 @@
+﻿
+@{
+    ViewBag.Title = "Reward";
+    Layout = "~/Views/Shared/User_Zone_Layout.cshtml";
+}
+
+
+<script>
+    $(document).ready(function () {
+        $('#userEmailDropdown').change(function () {
+            var selectedEmail = $(this).val();
+            if (selectedEmail) {
+                // Use AJAX to fetch items posted by the selected email
+                $.ajax({
+                    url: '/User/GetItemsByUserEmail',
+                    type: 'GET',
+                    data: { email: selectedEmail },
+                    success: function (data) {
+                        $('#itemsPostedDropdown').html(data);
+                    }
+                });
+            } else {
+                // Clear the second dropdown if no email is selected
+                $('#itemsPostedDropdown').html('<option selected disabled>---Select Items Posted---</option>');
+            }
+        });
+    });
+</script>
+
+<style>
+    .formb {
+        border-radius: 10px;
+        box-shadow: 5px 5px 12px 0px rgba(0,0,0,0.39);
+        border-radius: 10px;
+        margin-bottom: 100px;
+        margin-top: 100px;
+        background-color: #f7f3e3ff;
+    }
+
+    span {
+       \
+    }
+</style>
+<div class="row d-flex align-items-center py-5" style="background-color: #a8763eff;">
+    <div class="col-sm-1"></div>
+    <div class="col-sm-6">
+        <h1><b>An Honest Person</b></h1> <h1 style="color: #6f1a07ff;"><b>Deserves a reward</b></h1><h1><b> </b></h1> <h1><b>Give Your favourite user an exciting reward for their honest work.</b></h1>
+    </div>
+    <div class="col-sm-4 text-center">
+        <img src="/Content/images/reward.jpg" height="400" />
+    </div>
+    <div class="col-sm-1"></div>
+</div>
+<div class="row back">
+    <div class="col-sm-3"></div>
+    <div class="col-sm-6 formb">
+        <h2 class="text-center" style="">Give Reward</h2><hr class="" />
+        <p>@ViewBag.Rsg</p>
+        <form action="/User/Reward" method="post" enctype="multipart/form-data">
+            <div class="mb-3">
+                <span>Select Caegory</span>&emsp;
+                <select class="form-select" name="UserId" id="userEmailDropdown">
+                    <option selected disabled>---Select User---</option>
+                   
+                    @foreach (string userId in ViewBag.UniqueUserIds)
+                    {
+                        <option>@userId</option>
+                    }
+                </select>
+            </div>
+            <div class="mb-3">
+                <span>Select Items Posted</span>&emsp;
+                <select class="form-select" name="Description" id="itemsPostedDropdown">
+                    <option selected disabled>---Select Items Posted---</option>
+                    
+                </select>
+            </div>
+            <div class="mb-3">
+                <span>Amount</span>&emsp;
+                <input type="number" name="RewardAmount" class="form-control" placeholder="Enter Reward Amount" />
+            </div>
+            <div class="mb-3">
+                <span>DD No.</span>&emsp;
+                <input type="number" name="DDNumber" class="form-control" placeholder="Enter DD No." />
+            </div>
+            <div class="mb-3">
+                <span>Upload</span>&emsp;
+                <input type="file" name="DDFilePic" class="form-control" />
+            </div>
+            <div class="mb-3 button">
+                <button type="submit" class="form-control btn btn-warning">Submit</button>
+            </div>
+        </form>
+    </div>
+    <div class="col-sm-3"></div>
+</div>

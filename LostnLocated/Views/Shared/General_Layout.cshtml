@@ -1,0 +1,313 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="~/Content/js/code.jquery.com_jquery-3.7.0.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    <link href="~/Content/css/General_Layout_Style.css" rel="stylesheet" />
+    <link href="~/Content/fontawesome-free-6.4.2-web/css/all.min.css" rel="stylesheet" />
+    <script src="~/Content/fontawesome-free-6.4.2-web/js/all.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400&display=swap" rel="stylesheet">
+    <script>
+        $(document).ready(function () {
+            if ('@TempData["EnqMsg"]'.length>0)
+                alert('@TempData["EnqMsg"]');
+
+
+            $("#Ebtnsave").click(function () {
+                var result = true, name, email, mob, message;
+                name = $("#Ename").val().trim();
+                email = $("#Eemail").val().trim();
+                mob = $("#Emobile").val().trim();
+                message = $("#Emessage").val().trim();
+                //name validation
+                $(".err").remove();
+
+                if (name.length == 0) {
+                    result = false;
+                    $("#Ename").after("<span class='err'>please enter your name.</span>");
+                }
+                else if (name.length < 2) {
+                    result = false;
+                    $("#Ename").after("<span class='err'>please enter a valid name.</span>");
+                }
+                else {
+                    var flag = true;
+                    for (x = 0; x < name.length; x++) {
+                        var ch = name.charCodeAt(x);
+                        if (!((ch >= 65 && ch <= 90) || (ch >= 97 && ch <= 122) || ch == 32)) {
+                            flag = false;
+                            break;
+                        }
+                    }
+                    if (flag == false) {
+                        result = false;
+                        $("#Ename").after("<span class='err'>Number & special symbols are not allowed.</span>");
+                    }
+                }
+
+
+                //email validation
+                if (email.length == 0) {
+                    result = false;
+                    $("#Eemail").after("<span class='err'>Please enter emailId.</span>");
+                }
+                else {
+                    if (email.indexOf('@@') <= 0) {
+                        result = false;
+                        $("#Eemail").after("<span class='err'>Please enter valid emailId.</span>");
+                    }
+                    else {
+                        var dot = email.indexOf('.');
+                        if (!(dot > 2 && (email.length - dot) >= 3)) {
+                            result = false;
+                            $("#Eemail").after("<span class='err'>Please enter valid emailId.</span>");
+                        }
+                    }
+                }
+                // mobNo validation
+                if (mob.length == 0) {
+                    result = false;
+                    $("#Emobile").after("<span class='err'>Please enter mobile no.</span>");
+                }
+                else if (mob.length != 10) {
+                    result = false;
+                    $("#Emobile").after("<span class='err'>Mobile no must have exact 10 digit.</span>");
+                }
+                else {
+                    fchar = mob.charCodeAt(0);
+                    if (!(fchar >= 54 && fchar <= 57)) {
+                        result = false;
+                        $("#Emobile").after("<span class='err'>Invalid indian mobile no.</span>");
+                    }
+                }
+
+                //message valida
+                if (message.length == 0) {
+                    result = false;
+                    $("#Emessage").after("<span class='err'>please enter message.</span>");
+                }
+                return result;
+            });
+
+
+        });
+    </script>
+    <title>@ViewBag.Title</title>
+
+    <style>
+
+        * {
+            font-family: 'Ubuntu', sans-serif;
+        }
+
+
+
+
+        #BName {
+            color: #6f1a07ff;
+            font-weight: bolder;
+        }
+
+        #navlink:hover {
+            color: #6f1a07ff;
+        }
+
+        #navbarDropdownMenuLink:hover {
+            color: #6f1a07ff;
+        }
+
+        .bottom-footer {
+            text-align: center;
+            background-color: black;
+        }
+
+        .footer-upper {
+            border-right: 2px solid white;
+        }
+
+        .fnav {
+            text-decoration: none;
+            color: white;
+        }
+
+            .fnav:hover {
+                color: #f7f3e3ff;
+            }
+
+        .ico {
+            font-size: 25px;
+        }
+        .btn-warning {
+            background-color: #6f1a07ff;
+            border: none;
+            color: white;
+            margin-left: 5px;
+            margin-right: 5px;
+        }
+
+            .btn-warning:hover {
+                background-color: #55828bff;
+                color: white;
+            }
+    </style>
+</head>
+<body>
+    <!-----------------------------------HEADER OR NAV------------------------------->
+    <div class="container-fluid">
+        <div class="row header">
+            <nav class="navbar navbar-expand-lg navbar-light" style="background-color:#f7f3e3ff;">
+                <div class="container-fluid">
+                    <span><img src="/Content/images/finalogo.png" width="65" /></span>
+                    <b>  @Html.ActionLink("Lost  &  Found", "Index", "General", new { @class = "navbar-brand mx-3", id = "BName", style="font-size:30px;" }) </b>
+
+                    <!--  <a class="navbar-brand" href="#" id="BName"><b><i>Lost & Locate</i></b></a>  -->
+
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                        <ul class="navbar-nav  ms-auto"  style="font-size:20px;">
+                            <li class="nav-item mx-2">
+                                @Html.ActionLink("Home", "Index", "General", new { @class = "nav-link active" })
+                            </li>
+                            <li class="nav-item mx-2">
+                                @Html.ActionLink("About us", "AboutUs", "General", new { @class = "nav-link", id = "navlink" })
+                            </li>
+                            <li class="nav-item mx-2">
+                                @Html.ActionLink("Contact us", "ContactUs", "General", new { @class = "nav-link", id = "navlink" })
+                            </li>
+                            <!--ENQUIRY MODAL BETWEEN NAVBAR-->
+                            <li class="nav-item mx-2">
+                                <a class="nav-link enquiry" href="#" id="navlink" onclick="" data-bs-toggle="modal" data-bs-target="#exampleModal">Enquiry</a>
+                            </li>
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">ENQUIRY</h1>
+                                         
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            <!--MODAL IS FROM BOOTSTRAP-->
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="/General/SaveEnquiry" method="Post">
+                                                <div class="mb-3">
+                                                    <label for="Ename" class="form-label">Name</label>
+
+                                                    <input class="form-control" name="Name" type="text" id="Ename" value="Name">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="Eemail" class="form-label">Email address</label>
+                                                    <input type="email" class="form-control" name="EmailId" id="Eemail" placeholder="E-Mail">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="Emobile" class="form-label">Mobile Number</label>
+                                                    <input type="number" class="form-control" name="MobileNo" id="Emobile" placeholder="Mobile Number">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="exampleFormControlInput1" class="form-label">Query Message</label>
+                                                    <textarea type="text" class="form-control" name="Message" id="Emessage" placeholder="Query Message"></textarea>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <input type="submit" class="btn btn-warning" id="Ebtnsave" value="Submit Information">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                </div>
+                                               
+                                            </form>
+                                        </div>
+                                      
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!--ENQUIRY MODAL END-->
+                            <li class="nav-item dropdown mx-2">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    SignIn
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
+                                    <li>
+                                        @Html.ActionLink("Login", "Login", "General", new { @class = "dropdown-item" })
+                                    </li>
+                                    <li>@Html.ActionLink("Register", "Register", "General", new { @class = "dropdown-item" })
+                                    </li>
+
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div> 
+            </nav>
+        </div>
+        <!---------------MAIN BODDDYYYYY-------------------->
+       
+
+        @RenderBody()
+
+
+        <!---------------------------FOOOTEEERRRRRR---------------------------------->
+
+        <div class="row py-sm-5" style=" background-color: #6f1a07ff; color: white; ">
+            <div class="col-sm-1"></div>
+            <div class="col-sm-10" style="text-align:center">
+                <div class="row">
+                    <div class="col-sm-4 footer-upper">
+                        <h4>Quick Links</h4>
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                @Html.ActionLink("Home", "Index", "General", new { @class = "fnav" })
+                            </li>
+                            <li class="nav-item">
+                                @Html.ActionLink("About us", "AboutUs", "General", new { @class = "fnav" })
+                            </li>
+                            <li class="nav-item">
+                                @Html.ActionLink("Contact us", "ContactUs", "General", new { @class = "fnav" })
+                            </li>
+                            <li>
+                                @Html.ActionLink("Login", "Login", "General", new { @class = "fnav" })
+                            </li>
+                            <li>@Html.ActionLink("Register", "Register", "General", new { @class = "fnav" })</li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-4 footer-upper">
+                        <h4>Registered Address</h4>
+                        <p>
+                            CHITRAKOOT UTTAR PRADESH - 210204,<br />
+                            +9123462349723,<br />
+                            kamadgiritrust@gmail.com
+                        </p>
+                    </div>
+                    <div class="col-sm-4">
+                        <h4>HELP</h4>
+                        @Html.ActionLink("F&Q", "FandQ", "General", new { @class = "fnav" }) &nbsp;|
+                        @Html.ActionLink("Privacy Policy", "PrivacyPolicy", "General", new { @class = "fnav" })&nbsp;|
+                        @Html.ActionLink("T&C", "Terms", "General", new { @class = "fnav" })
+                        <br /><br />
+                        <h4>Social Media</h4>
+                        <a href="#" class="fnav"><i class="fa-brands fa-square-facebook ico"></i></a>&emsp;
+                        <a href="#" class="fnav"><i class="fa-brands fa-square-instagram ico"></i></a>&emsp;
+                        <a href="#" class="fnav"><i class="ico fa-brands fa-square-twitter"></i></a>&emsp;
+                        <a href="#" class="fnav"><i class="fa-brands fa-square-youtube ico"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-1"></div>
+        </div>
+
+        <div class="row bottom-footer">
+            <div class="col-sm-6"><a href="https://www.mykss.in/" class="fnav">Copyright &copy; Kamadgiri Trust</a></div>
+            <div class="col-sm-6 fnav">Developed By @Html.ActionLink("MCA Students", "Developers", "General", new { @class = "fnav" })</div>
+        </div>
+    </div>
+</body>
+</html>

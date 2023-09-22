@@ -1,0 +1,406 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="LostnFoundDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="EnquiryMaster">
+          <Key>
+            <PropertyRef Name="EnquiryId" />
+          </Key>
+          <Property Name="EnquiryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" />
+          <Property Name="EmailId" Type="varchar" MaxLength="150" />
+          <Property Name="MobileNo" Type="varchar" MaxLength="50" />
+          <Property Name="Message" Type="varchar(max)" />
+          <Property Name="EnquityDT" Type="datetime" />
+        </EntityType>
+        <EntityType Name="FeedbackMaster">
+          <Key>
+            <PropertyRef Name="FeedbackId" />
+          </Key>
+          <Property Name="FeedbackId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="FeedTitle" Type="varchar" MaxLength="50" />
+          <Property Name="FeedText" Type="varchar(max)" />
+          <Property Name="FeedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="LoginMaster">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="Pass" Type="varchar" MaxLength="100" />
+          <Property Name="UserType" Type="varchar" MaxLength="40" />
+        </EntityType>
+        <EntityType Name="NotificationMaster">
+          <Key>
+            <PropertyRef Name="NotificationId" />
+          </Key>
+          <Property Name="NotificationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NotificationText" Type="varchar(max)" />
+          <Property Name="NotificationDT" Type="datetime" />
+        </EntityType>
+        <EntityType Name="PostMaster">
+          <Key>
+            <PropertyRef Name="LFId" />
+          </Key>
+          <Property Name="LFId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="varchar" MaxLength="100" />
+          <Property Name="PostType" Type="varchar" MaxLength="10" />
+          <Property Name="GoodsCategory" Type="varchar" MaxLength="50" />
+          <Property Name="DateOfFoundLost" Type="datetime" />
+          <Property Name="TimeOfFoundLost" Type="varchar" MaxLength="50" />
+          <Property Name="SpecifyAddress" Type="varchar(max)" />
+          <Property Name="Pincode" Type="int" />
+          <Property Name="Description" Type="varchar(max)" />
+          <Property Name="GoodsPicName" Type="varchar" MaxLength="200" />
+          <Property Name="CurrentDate" Type="date" />
+        </EntityType>
+        <EntityType Name="RewardMaster">
+          <Key>
+            <PropertyRef Name="RewardId" />
+          </Key>
+          <Property Name="RewardId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="varchar" MaxLength="100" />
+          <Property Name="RewardAmount" Type="int" />
+          <Property Name="Description" Type="varchar(max)" />
+          <Property Name="DDNumber" Type="varchar" MaxLength="40" />
+          <Property Name="DDFilePic" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="UserMaster">
+          <Key>
+            <PropertyRef Name="EmailId" />
+          </Key>
+          <Property Name="Name" Type="varchar" MaxLength="100" />
+          <Property Name="Gender" Type="varchar" MaxLength="10" />
+          <Property Name="DOB" Type="varchar" MaxLength="30" />
+          <Property Name="MobileNo" Type="varchar" MaxLength="15" />
+          <Property Name="EmailId" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="FatherName" Type="varchar" MaxLength="100" />
+          <Property Name="CurrAddress" Type="varchar" MaxLength="200" />
+          <Property Name="PerAddress" Type="varchar" MaxLength="200" />
+          <Property Name="RegDate" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_FeedbackMaster_UserMaster">
+          <End Role="UserMaster" Type="Self.UserMaster" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="FeedbackMaster" Type="Self.FeedbackMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserMaster">
+              <PropertyRef Name="EmailId" />
+            </Principal>
+            <Dependent Role="FeedbackMaster">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PostMaster_UserMaster">
+          <End Role="UserMaster" Type="Self.UserMaster" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PostMaster" Type="Self.PostMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserMaster">
+              <PropertyRef Name="EmailId" />
+            </Principal>
+            <Dependent Role="PostMaster">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RewardMaster_UserMaster">
+          <End Role="UserMaster" Type="Self.UserMaster" Multiplicity="0..1" />
+          <End Role="RewardMaster" Type="Self.RewardMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserMaster">
+              <PropertyRef Name="EmailId" />
+            </Principal>
+            <Dependent Role="RewardMaster">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="LostnFoundDBModelStoreContainer">
+          <EntitySet Name="EnquiryMaster" EntityType="Self.EnquiryMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FeedbackMaster" EntityType="Self.FeedbackMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LoginMaster" EntityType="Self.LoginMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NotificationMaster" EntityType="Self.NotificationMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PostMaster" EntityType="Self.PostMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RewardMaster" EntityType="Self.RewardMaster" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserMaster" EntityType="Self.UserMaster" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_FeedbackMaster_UserMaster" Association="Self.FK_FeedbackMaster_UserMaster">
+            <End Role="UserMaster" EntitySet="UserMaster" />
+            <End Role="FeedbackMaster" EntitySet="FeedbackMaster" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PostMaster_UserMaster" Association="Self.FK_PostMaster_UserMaster">
+            <End Role="UserMaster" EntitySet="UserMaster" />
+            <End Role="PostMaster" EntitySet="PostMaster" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RewardMaster_UserMaster" Association="Self.FK_RewardMaster_UserMaster">
+            <End Role="UserMaster" EntitySet="UserMaster" />
+            <End Role="RewardMaster" EntitySet="RewardMaster" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="LostnFoundDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="EnquiryMaster">
+          <Key>
+            <PropertyRef Name="EnquiryId" />
+          </Key>
+          <Property Name="EnquiryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="EmailId" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="MobileNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="EnquityDT" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="LoginMaster">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Pass" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="UserType" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="NotificationMaster">
+          <Key>
+            <PropertyRef Name="NotificationId" />
+          </Key>
+          <Property Name="NotificationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NotificationText" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="NotificationDT" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="UserMaster">
+          <Key>
+            <PropertyRef Name="EmailId" />
+          </Key>
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Gender" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="DOB" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="MobileNo" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="EmailId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FatherName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CurrAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="PerAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="RegDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="FeedbackMasters" Relationship="LostnFoundDBModel.FK_FeedbackMaster_UserMaster" FromRole="UserMaster" ToRole="FeedbackMaster" />
+          <NavigationProperty Name="PostMasters" Relationship="LostnFoundDBModel.FK_PostMaster_UserMaster" FromRole="UserMaster" ToRole="PostMaster" />
+          <NavigationProperty Name="RewardMasters" Relationship="LostnFoundDBModel.FK_RewardMaster_UserMaster" FromRole="UserMaster" ToRole="RewardMaster" />
+        </EntityType>
+        <EntityContainer Name="LostnFoundDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="EnquiryMasters" EntityType="Self.EnquiryMaster" />
+          <EntitySet Name="LoginMasters" EntityType="Self.LoginMaster" />
+          <EntitySet Name="NotificationMasters" EntityType="Self.NotificationMaster" />
+          <EntitySet Name="UserMasters" EntityType="Self.UserMaster" />
+          <EntitySet Name="FeedbackMasters" EntityType="LostnFoundDBModel.FeedbackMaster" />
+          <AssociationSet Name="FK_FeedbackMaster_UserMaster" Association="LostnFoundDBModel.FK_FeedbackMaster_UserMaster">
+            <End Role="UserMaster" EntitySet="UserMasters" />
+            <End Role="FeedbackMaster" EntitySet="FeedbackMasters" />
+          </AssociationSet>
+          <EntitySet Name="PostMasters" EntityType="LostnFoundDBModel.PostMaster" />
+          <AssociationSet Name="FK_PostMaster_UserMaster" Association="LostnFoundDBModel.FK_PostMaster_UserMaster">
+            <End Role="UserMaster" EntitySet="UserMasters" />
+            <End Role="PostMaster" EntitySet="PostMasters" />
+          </AssociationSet>
+          <EntitySet Name="RewardMasters" EntityType="LostnFoundDBModel.RewardMaster" />
+          <AssociationSet Name="FK_RewardMaster_UserMaster" Association="LostnFoundDBModel.FK_RewardMaster_UserMaster">
+            <End Role="UserMaster" EntitySet="UserMasters" />
+            <End Role="RewardMaster" EntitySet="RewardMasters" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="FeedbackMaster">
+          <Key>
+            <PropertyRef Name="FeedbackId" />
+          </Key>
+          <Property Name="FeedbackId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FeedTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FeedText" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="FeedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="UserMaster" Relationship="LostnFoundDBModel.FK_FeedbackMaster_UserMaster" FromRole="FeedbackMaster" ToRole="UserMaster" />
+        </EntityType>
+        <Association Name="FK_FeedbackMaster_UserMaster">
+          <End Type="LostnFoundDBModel.UserMaster" Role="UserMaster" Multiplicity="1" />
+          <End Type="LostnFoundDBModel.FeedbackMaster" Role="FeedbackMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserMaster">
+              <PropertyRef Name="EmailId" />
+            </Principal>
+            <Dependent Role="FeedbackMaster">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="PostMaster">
+          <Key>
+            <PropertyRef Name="LFId" />
+          </Key>
+          <Property Name="LFId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PostType" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="GoodsCategory" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DateOfFoundLost" Type="DateTime" Precision="3" />
+          <Property Name="TimeOfFoundLost" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SpecifyAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Pincode" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="GoodsPicName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="CurrentDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="UserMaster" Relationship="LostnFoundDBModel.FK_PostMaster_UserMaster" FromRole="PostMaster" ToRole="UserMaster" />
+        </EntityType>
+        <Association Name="FK_PostMaster_UserMaster">
+          <End Type="LostnFoundDBModel.UserMaster" Role="UserMaster" Multiplicity="0..1" />
+          <End Type="LostnFoundDBModel.PostMaster" Role="PostMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserMaster">
+              <PropertyRef Name="EmailId" />
+            </Principal>
+            <Dependent Role="PostMaster">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="RewardMaster">
+          <Key>
+            <PropertyRef Name="RewardId" />
+          </Key>
+          <Property Name="RewardId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="DDNumber" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="DDFilePic" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="UserMaster" Relationship="LostnFoundDBModel.FK_RewardMaster_UserMaster" FromRole="RewardMaster" ToRole="UserMaster" />
+          <Property Name="RewardAmount" Type="Int32" />
+        </EntityType>
+        <Association Name="FK_RewardMaster_UserMaster">
+          <End Type="LostnFoundDBModel.UserMaster" Role="UserMaster" Multiplicity="0..1" />
+          <End Type="LostnFoundDBModel.RewardMaster" Role="RewardMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserMaster">
+              <PropertyRef Name="EmailId" />
+            </Principal>
+            <Dependent Role="RewardMaster">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="LostnFoundDBModelStoreContainer" CdmEntityContainer="LostnFoundDBEntities">
+          <EntitySetMapping Name="EnquiryMasters">
+            <EntityTypeMapping TypeName="LostnFoundDBModel.EnquiryMaster">
+              <MappingFragment StoreEntitySet="EnquiryMaster">
+                <ScalarProperty Name="EnquiryId" ColumnName="EnquiryId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="EnquityDT" ColumnName="EnquityDT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LoginMasters">
+            <EntityTypeMapping TypeName="LostnFoundDBModel.LoginMaster">
+              <MappingFragment StoreEntitySet="LoginMaster">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Pass" ColumnName="Pass" />
+                <ScalarProperty Name="UserType" ColumnName="UserType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NotificationMasters">
+            <EntityTypeMapping TypeName="LostnFoundDBModel.NotificationMaster">
+              <MappingFragment StoreEntitySet="NotificationMaster">
+                <ScalarProperty Name="NotificationId" ColumnName="NotificationId" />
+                <ScalarProperty Name="NotificationText" ColumnName="NotificationText" />
+                <ScalarProperty Name="NotificationDT" ColumnName="NotificationDT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserMasters">
+            <EntityTypeMapping TypeName="LostnFoundDBModel.UserMaster">
+              <MappingFragment StoreEntitySet="UserMaster">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+                <ScalarProperty Name="FatherName" ColumnName="FatherName" />
+                <ScalarProperty Name="CurrAddress" ColumnName="CurrAddress" />
+                <ScalarProperty Name="PerAddress" ColumnName="PerAddress" />
+                <ScalarProperty Name="RegDate" ColumnName="RegDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FeedbackMasters">
+            <EntityTypeMapping TypeName="LostnFoundDBModel.FeedbackMaster">
+              <MappingFragment StoreEntitySet="FeedbackMaster">
+                <ScalarProperty Name="FeedDate" ColumnName="FeedDate" />
+                <ScalarProperty Name="FeedText" ColumnName="FeedText" />
+                <ScalarProperty Name="FeedTitle" ColumnName="FeedTitle" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="FeedbackId" ColumnName="FeedbackId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PostMasters">
+            <EntityTypeMapping TypeName="LostnFoundDBModel.PostMaster">
+              <MappingFragment StoreEntitySet="PostMaster">
+                <ScalarProperty Name="CurrentDate" ColumnName="CurrentDate" />
+                <ScalarProperty Name="GoodsPicName" ColumnName="GoodsPicName" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Pincode" ColumnName="Pincode" />
+                <ScalarProperty Name="SpecifyAddress" ColumnName="SpecifyAddress" />
+                <ScalarProperty Name="TimeOfFoundLost" ColumnName="TimeOfFoundLost" />
+                <ScalarProperty Name="DateOfFoundLost" ColumnName="DateOfFoundLost" />
+                <ScalarProperty Name="GoodsCategory" ColumnName="GoodsCategory" />
+                <ScalarProperty Name="PostType" ColumnName="PostType" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="LFId" ColumnName="LFId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RewardMasters">
+            <EntityTypeMapping TypeName="LostnFoundDBModel.RewardMaster">
+              <MappingFragment StoreEntitySet="RewardMaster">
+                <ScalarProperty Name="RewardAmount" ColumnName="RewardAmount" />
+                <ScalarProperty Name="DDFilePic" ColumnName="DDFilePic" />
+                <ScalarProperty Name="DDNumber" ColumnName="DDNumber" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="RewardId" ColumnName="RewardId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

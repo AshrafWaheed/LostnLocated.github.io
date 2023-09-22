@@ -1,0 +1,48 @@
+﻿
+@{
+    ViewBag.Title = "FeedbackManagement";
+    Layout = "~/Views/Shared/Admin_Zone_Layout.cshtml";
+}
+
+
+@using LostnLocated.Models
+@model IEnumerable<FeedbackMaster>
+
+
+
+<h2 class="text-center fw-bold my-5">FeedbackManagement</h2>
+    
+
+<span>@TempData["msg"]</span>
+<!--DETAILS START-->
+<div class="row" style="background-color: #f7f3e3ff;">
+    <div class="col-sm-12 table-responsive-sm">
+        
+        <table class="table table-hover table-striped">
+            <tr style="background-color: #a8763eff;">
+               <th style="color:white; font-weight:bold;">Sno</th>
+                <th style="color:white; font-weight:bold;">User Details</th>
+                <th style="color:white; font-weight:bold;">Feedback Topic</th>
+                <th style="color:white; font-weight:bold;">Feedback Message</th>
+                <th style="color:white; font-weight:bold;">Feedback Date</th>
+            </tr>
+            @{ 
+                int n = 1;
+                foreach(FeedbackMaster fm in Model)
+            {
+                <tr>
+                    <td>@n</td>
+                    <td>
+                        <span class="text-primary">@fm.UserMaster.Name</span>
+                        <br />
+                       <span class="text-primary">@fm.UserMaster.EmailId</span>
+                    </td>
+                    <td>@fm.FeedTitle</td>
+                    <td>@fm.FeedText</td>
+                    <td>@fm.FeedDate</td>
+                </tr>
+            }
+            }
+            </table>
+        </div>
+    </div>

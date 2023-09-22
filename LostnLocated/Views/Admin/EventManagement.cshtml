@@ -1,0 +1,130 @@
+﻿
+@{
+    ViewBag.Title = "EventManagement";
+    Layout = "~/Views/Shared/Admin_Zone_Layout.cshtml";
+}
+@using LostnLocated.Models
+@model IEnumerable<NotificationMaster>
+
+<script>
+    $(document).ready(function () {
+        $(".del").click(function () {
+            var curRow = $(this).parents("td").parents("tr");
+            var nid = curRow.find("td").eq(0).text().trim();
+            //Deleting record from database using AJAX
+
+            $.getJSON("/Admin/RemoveNotif?NotId=" + nid, function (data) {
+                if (data == "SUCCESS") {
+                    curRow.slideUp(500);
+                    alert("Notification Deleted Successfully");
+                }
+                else {
+                    alert("Sorry Unable to delete");
+                }
+            });
+
+        });
+        var myrow;
+        //TO load notification text in modal on edit
+        $(".edit").click(function () {
+            myrow = $(this).parents("td").parents("tr");
+            var nmsg = myrow.find("td").eq(1).text().trim();
+            $("#txt").val(nmsg);
+        });
+        //To save updated notification
+        $("#btnupdate").click(function () {
+            var nid = myrow.find("td").eq(0).text().trim();
+            var newnoti = $("#txt").val().trim();
+            $.getJSON("/Admin/UpdateNotif?NotifId=" + nid + "&Message=" + newnoti, function (res) {
+                if (res == "SUCCESS") {
+
+                    $("#btnclose").trigger("click");
+                    myrow.find("td").eq(1).text(newnoti);
+                    alert("Notifcation updated");
+
+                }
+                else {
+                    alert("UNABLE TO UPDATE");
+                }
+            });
+        });
+
+    });
+</script>
+<style>
+    .formb {
+        background-color: #f7f3e3ff;
+    }
+
+    .tablerow {
+        background-color: #f7f3e3ff;
+        color: white;
+    }
+</style>
+
+<div class="row my-5">
+    <div class="col-sm-3"></div>
+    <div class="col-sm-6 formb py-4">
+        <h2 class="text-center fw-bold">ADD NEW EVENT</h2><hr />
+        <p>@ViewBag.Msg</p>
+        <form action="/Admin/EventManagement" method="post">
+
+            <div class="mb-3">
+                <span>Describe</span>&emsp;
+                <textarea cols="22" rows="3" name="NotificationText" placeholder="WRITE HERE" class="form-control"></textarea>
+            </div>
+            <div class="mb-3 button">
+                <button type="submit" class="form-control btn btn-warning">Submit</button>
+            </div>
+        </form>
+    </div>
+    <div class="col-sm-3"></div>
+</div>
+<h3 class="text-center my-5 fw-bold">MANAGE EVENTS</h3>
+<div class="row my-4" style="background-color: #f7f3e3ff;">
+    <div class="col-sm-12">
+
+
+        <table class="table table-hover table-striped my-3">
+            <tr style="background-color: #a8763eff;">
+                <th style="color:white; font-weight:bold;">ID</th>
+                <th style="color:white; font-weight:bold;">EVENT TEXT</th>
+                <th style="color:white; font-weight:bold;">EVENT DATE</th>
+                <th style="color:white; font-weight:bold;" colspan="2" class="text-center">Manage</th>
+            </tr>
+            @{
+                foreach (NotificationMaster nm in Model)
+                {
+                    <tr>
+                        <td>@nm.NotificationId</td>
+                        <td>@nm.NotificationText</td>
+                        <td>@nm.NotificationDT</td>
+                        <td>
+                            <span class=" edit fa fa-pencil text-primary h3" style="cursor:pointer;" title="Edit" data-bs-toggle="modal" data-bs-target="#exampleModal"></span>
+                        <td>
+                            <span class="del fa fa-remove text-danger h3" style="cursor:pointer;" title="Delete"></span>
+                        </td>
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+</div>
+
+<div class="modal" tabindex="-1" id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">UPDATE EVENT</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <textarea id="txt" placeholder="Enter new text" rows="4" class="form-control"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning" id="btnclose" data-bs-dismiss="modal">Close</button>
+                <button type="button" id="btnupdate" class="btn btn-warning">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,69 @@
+﻿
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/User_Zone_Layout.cshtml";
+}
+
+
+
+<style>
+ 
+
+    #name {
+        font-size: 30px;
+    }
+
+    .cardna {
+        text-align: justify;
+    }
+
+    .cardna1 {
+        background-color: #a8763eff;
+        padding-top: 50px;
+        padding-bottom: 50px;
+        border-radius: 10px;
+        font-weight:bold;
+    }
+        .cardna1:hover {
+            background-color: #f7f3e3ff;
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+        }
+</style>
+<div class="row">
+    <div class="col-sm-1"></div>
+    <div class="col-sm-10 ">
+        <h2 class="text-center my-3">Welcome to the Lost and Found</h2>
+        <hr class="text-light" />
+                <div class="row">
+                    <div class="col-sm-5 py-2 text-center" style="background-color: #6f1a07ff; ">
+                        <img src="/Content/images/usericon.jpg" style="border-radius:50%;" width="200" height="200" />
+                    </div>
+                    <div class="col-sm-7 cardna" style="padding-top: 20px; background-color: #f7f3e3ff; color:black">
+                        <p id="name"><b>@ViewBag.UserName</b></p>
+                        <p>@ViewBag.UserId</p>
+                        <p>To update your profile click below button.</p>
+                        @Html.ActionLink("Update Profile", "MyProfile", "User", new { @class = "btn btn-warning m-0" })
+                    </div>
+                </div>
+            
+        
+                <div class="row my-3">
+                    <div class="col-sm-3 cardna1 text-center" style="padding-right:10px;">
+                        <p>Post if you found something or lost anything.</p>
+                        @Html.ActionLink("Post Things", "Index", "User", new { @class = "btn btn-warning", style = "font-weight:bold;" })
+                    </div>
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-4 cardna1 text-center" style="padding-right: 10px; padding-left: 10px; ">
+                        <p>You can see your all uploads here.</p><br />
+                        @Html.ActionLink("MyUploads", "MyUploads", "User", new { @class = "btn btn-warning", style = "font-weight:bold;" })
+                    </div>
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-3 cardna1 text-center" style="padding-right:10px;padding-left:10px;">
+                        <p>You can search for your lost here.</p>
+                        @Html.ActionLink("Search Materials", "Search", "User", new { @class = "btn btn-warning", style = "font-weight:bold;" })
+                    </div>
+                </div>
+           
+    </div>
+    <div class="col-sm-1"></div>
+</div>

@@ -1,0 +1,86 @@
+﻿
+@{
+    ViewBag.Title = "Search";
+    Layout = "~/Views/Shared/User_Zone_Layout.cshtml";
+}
+
+
+
+@using LostnLocated.Models
+@model IEnumerable<PostMaster>
+
+
+<style>
+  
+
+ 
+
+    th {
+        min-height: 15px;
+    }
+   
+</style>
+<div class="row py-5" style="background-color: #a8763eff; ">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-8" >
+        <h2 class="text-center">Search Your Product Here</h2>
+        <hr class="text-light" />
+        <form action="/User/Search" method="post" role="search" class="d-flex">
+            <input type="search" name="SearchValue" class="form-control me-2" placeholder="Search your item..." />
+            <input type="submit" value="Search" class="btn btn-warning" />
+        </form>
+    </div>
+    </div>
+    <div class="col-sm-2"></div>
+    @{if (Model.Count() > 0)
+        {
+    <div class="row tab">
+        <div class="col-sm-12 table-responsive-sm">
+                <table class="table table-hover table-striped table-sm">
+                        
+                            <tr class="bg-success">
+                                <th>L&F Id</th>
+                                <th>Post Type</th>
+                                <th>Good Category</th>
+                                <th>Time</th>
+                                <th>Date</th>
+                                <th>Address</th>
+                                <th>Pincode</th>
+                                <th>Description</th>
+                                <th>Good Pic</th>
+                            </tr>
+                        
+                    @{
+                        foreach (PostMaster pm in Model)
+                        {
+                            string picpath = string.Empty;
+                            if (pm.GoodsPicName.Length > 0)
+                            {
+                                picpath = "/Content/LostFoundItems/" + pm.GoodsPicName;
+                            }
+                               
+                                 <tr>
+                                   <td>@pm.LFId</td>
+                                    <td>@pm.PostType</td>
+                                     <td>@pm.GoodsCategory</td>
+                                     <td>@pm.TimeOfFoundLost</td>
+                                    <td>@pm.DateOfFoundLost</td>
+                                  <td>@pm.SpecifyAddress</td>
+                                   <td>@pm.Pincode</td>
+                                  <td>@pm.Description</td>
+                                        <td>
+                                 <img src="@picpath" height="60" width="60" style="border-radius:50%" />
+                                    </td>
+                               </tr>
+                                
+                        }
+                    }
+                </table>
+        </div>
+    </div>
+                        }
+else
+            {
+                <p> NO ITEMS FOUND </p>
+            }
+                    }

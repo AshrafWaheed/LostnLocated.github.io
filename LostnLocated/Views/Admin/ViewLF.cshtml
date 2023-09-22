@@ -1,0 +1,47 @@
+﻿@{
+    ViewBag.Title = "ViewLF";
+    Layout = "~/Views/Shared/Admin_Zone_Layout.cshtml";
+}
+@using LostnLocated.Models
+@model IEnumerable<PostMaster>
+
+<h2 class="text-center text-dark fw-bold my-5">View Lost & Found Materials</h2>
+<hr class="text-dark" />
+
+<div class="row tab" style="background-color: #f7f3e3ff;">
+
+
+    <div class="col-sm-12 table-responsive-sm">
+        <table class="table table-striped table-hover table-bordered table-sm">
+            <tr style="background-color: #a8763eff;">
+                <th style="color:white; font-weight:bold;">L&F Id</th>
+                <th style="color:white; font-weight:bold;">Good Category</th>
+                <th style="color:white; font-weight:bold;">Time</th>
+                <th style="color:white; font-weight:bold;">Date</th>
+                <th style="color:white; font-weight:bold;">Address</th>
+                <th style="color:white; font-weight:bold;">Pincode</th>
+                <th style="color:white; font-weight:bold;">Description</th>
+                <th style="color:white; font-weight:bold;">Goods Pic</th>
+            </tr>
+            @{
+                foreach (PostMaster pm in Model)
+                {
+                    string picpath = string.Empty;
+                    picpath = "/Content/LostFoundItems/" + pm.GoodsPicName;
+                    <tr>
+                        <td>@pm.LFId</td>
+                        <td>@pm.GoodsCategory</td>
+                        <td>@pm.TimeOfFoundLost</td>
+                        <td>@pm.DateOfFoundLost</td>
+                        <td>@pm.SpecifyAddress</td>
+                        <td>@pm.Pincode</td>
+                        <td>@pm.Description</td>
+                        <td>
+                            <img src="@picpath" height="60" width="60" style="border-radius:20%" />
+                        </td>
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+</div>

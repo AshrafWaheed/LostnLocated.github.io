@@ -1,0 +1,76 @@
+﻿
+@{
+    ViewBag.Title = "MyUploads";
+    Layout = "~/Views/Shared/User_Zone_Layout.cshtml";
+}
+
+
+
+
+
+@using LostnLocated.Models
+@model IEnumerable<PostMaster>
+
+
+
+<style>
+    .card-image {
+        max-width: 100%;
+        height: 200px;
+        border-radius:5px;
+    }
+    .ccc {
+        background-color: #f7f3e3ff; 
+        border-radius: 7px 7px 7px 7px;
+
+    }
+        .ccc:hover {
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+        }
+   
+</style>
+
+<div class="row my-5">
+    <h2 class="text-center">Your Uploads</h2>
+    <hr class="text-light" />
+    <br />
+    <div class="col-sm-2"></div>
+    <div class="col-sm-8" >
+
+        @{
+            foreach (PostMaster pm in Model)
+            {
+                string picpath = string.Empty;
+                if (pm.GoodsPicName.Length > 0)
+                {
+                    picpath = "/Content/LostFoundItems/" + pm.GoodsPicName;
+                }
+                <div class="row my-3 py-2 ccc">
+                      <div class="col-sm-4 text-center">
+                    <img src="@picpath" alt="Lost found image" class="card-image">
+                      </div>
+                    <div class="col-sm-8"> 
+                    <div class="item">
+                           <div class="card1">
+                           <div style=" " class="card-header ">
+                          <h4> <b> @pm.PostType </b></h4>
+                         </div>
+                         <div style="font-size:17px; " class="card-body">
+                            <p class="card-text" style="font-size:19px"> @pm.GoodsCategory</p>
+                       <span><b>DESCRIPTION:</b> @pm.Description</span><br />        
+                     <span><b>ADDRESS:</b> @pm.SpecifyAddress - </span><span>@pm.Pincode</span><br />
+                      <span><b>DATE:</b> @pm.DateOfFoundLost</span><br />
+                   <span><b>TIME:</b> @pm.TimeOfFoundLost</span><br />
+
+                    <!-- Add more card content here -->
+                 </div>
+               </div>
+              </div>
+            </div>
+           </div>
+            }
+        }
+
+    </div>
+    <div class="col-sm-2"></div>
+</div>

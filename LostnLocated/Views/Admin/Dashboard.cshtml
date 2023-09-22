@@ -1,0 +1,142 @@
+﻿
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/Admin_Zone_Layout.cshtml";
+}
+
+<script>
+    $(document).ready(function () {
+        const counters = [
+            { element: $("#count1"), end: 564 },
+            { element: $("#count2"), end: 765 },
+            { element: $("#count3"), end: 700 },
+            { element: $("#count4"), end: 560 }
+        ];
+
+        // Function to animate a counter from 0 to its target value
+        function animateCounter(counter) {
+            let start = 0;
+            const duration = 3000; // 1 second for all counters
+            const interval = 10; // Update the count every 10ms
+            const step = ((counter.end - start) * interval) / duration;
+
+            const timer = setInterval(function () {
+                start += step;
+                counter.element.text(Math.round(start));
+
+                if (start >= counter.end) {
+                    clearInterval(timer);
+                    counter.element.text(counter.end);
+                }
+            }, interval);
+        }
+
+        // Function to check if an element is in the viewport
+        function isElementInViewport(element) {
+            const rect = element[0].getBoundingClientRect();
+            return (
+                rect.top >= 0 &&
+                rect.left >= 0 &&
+                rect.bottom <= $(window).height() &&
+                rect.right <= $(window).width()
+            );
+        }
+
+        // Function to start the animations when the elements are in the viewport
+        function startCountersWhenVisible() {
+            counters.forEach(function (counter) {
+                if (isElementInViewport(counter.element) && !counter.started) {
+                    animateCounter(counter);
+                    counter.started = true;
+                }
+            });
+        }
+
+        // Call startCountersWhenVisible when the page loads and when the user scrolls
+        $(window).on("load scroll", startCountersWhenVisible);
+
+    });
+</script>
+<style>
+    .first {
+        margin-top: 70px;
+        margin-bottom: 70px;
+    }
+
+    .profile {
+        padding: 15px 15px 15px 15px;
+      
+        text-align: center;
+    }
+
+    #name {
+        font-size: 30px;
+    }
+
+    .cardna {
+        text-align: justify;
+    }
+
+    .cardna1 {
+        background-color: #a8763eff;
+        padding-top: 50px;
+        padding-bottom: 50px;
+        color:white;
+        border-radius: 10px;
+        font-weight: bold;
+    }
+        .cardna1:hover {
+            background-color: #f7f3e3ff;
+            color:black;
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+        }
+</style>
+<div class="row">
+    <div class="col-sm-1"></div>
+    <div class="col-sm-10 first profile">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="row profile">
+                    <div class="col-sm-5" style=" background-color: #f7f3e3ff;">
+                        <img src="/Content/images/profile.jpg" width="200" height="200" />
+                    </div>
+                    <div class="col-sm-7 cardna" style="padding-top: 20px; padding-bottom: 20px; background-color: #f7f3e3ff;">
+                        <p id="name"><b>Admin Lost & Found</b></p>
+                        <p>admin@gmail.com</p>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="row profile">
+                    <div class="col-sm-3 cardna1 text-center" style="padding-right:10px;">
+                        <p style="font-size:25px;">Total Users Registered.</p>
+                        <div class="counter">
+                            <span style="font-size:25px;" id="count1">0</span>
+                        </div>
+                        @Html.ActionLink("User Management", "UserManagement", "Admin", new { @class = "btn btn-warning my-2", style = "font-weight:bold;" })
+                    </div>
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-4 cardna1 text-center" style="padding-right:10px;padding-left:10px;">
+                        <p style="font-size:25px;">Total Items Posted</p>
+                        <div class="counter">
+                            <span style="font-size:25px;" id="count2">0</span>
+                        </div>
+                        @Html.ActionLink("View All Posts", "ViewLF", "Admin", new { @class = "btn btn-warning my-2", style = "font-weight:bold;" })
+                    </div>
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-3 cardna1 text-center" style="padding-right:10px;padding-left:10px;">
+                        <p style="font-size:25px;">Items Reunited.</p>
+                        <div class="counter">
+                            <span style="font-size:25px;" id="count3">0</span>
+                        </div>
+                        @Html.ActionLink("View Feedbacks", "FeedbackManagement", "Admin", new { @class = "btn btn-warning my-2", style = "font-weight:bold;" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-1"></div>
+</div>

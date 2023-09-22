@@ -1,0 +1,345 @@
+﻿
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/General_Layout.cshtml";
+}
+<script>
+    $(document).ready(function () {
+        $("#ImgRefresh").click(function () {
+            $.getJSON("/General/GetCaptcha", function (data) {
+                $("#ImgCaptcha").attr("src", "/Content/CaptchaImages/" + data);
+            });
+        });
+
+        $("#chk").change(function () {
+            var status = $("#chk").prop("checked");
+            var result = true;
+            var name, gender, email, mob, city, caddress, paddress, pass, cpass,fname;
+            name = $("#tname").val().trim();
+            fname = $("#tfname").val().trim();
+            email = $("#temail").val().trim();
+            mob = $("#tmob").val().trim();
+            caddress = $("#tcaddress").val().trim();
+            paddress = $("#tpaddress").val().trim();
+            pass = $("#tpass").val().trim();
+            cpass = $("#tcpass").val().trim();
+            $(".err").remove();
+            //--------------------NAME VALIDATION:-------------------------------
+            if (name.length == 0) {
+                result = false;
+                $("#tname").after("<span class='err'>Please enter your name</span>");
+            }
+            else if (name.length < 2) {
+                result = false;
+                $("#tname").after("<span class='err'> Enter your valid name</span>")
+            }
+            else {
+                var flag = true;
+                for (x = 0; x < name.length; x++) {
+                    ch = name.charCodeAt(x);
+                    if (!((ch >= 65 && ch <= 90) || (ch == 32) || (ch >= 97 && ch <= 122))) {
+                        flag = false;
+                        break;
+                    }
+                }
+                if (flag == false) {
+                    result = false;
+                    $("#tname").after("<span class='err'>Enter vaild name: nothing is valid except alphabets</span>");
+                }
+            }
+
+            //--------------------FATHER NAME VALIDATION:-------------------------------
+            if (fname.length == 0) {
+                result = false;
+                $("#tfname").after("<span class='err'>Please enter father's name</span>");
+            }
+            else if (fname.length < 2) {
+                result = false;
+                $("#tfname").after("<span class='err'> Enter valid name</span>")
+            }
+            else {
+                var flag = true;
+                for (x = 0; x < fname.length; x++) {
+                    ch = fname.charCodeAt(x);
+                    if (!((ch >= 65 && ch <= 90) || (ch == 32) || (ch >= 97 && ch <= 122))) {
+                        flag = false;
+                        break;
+                    }
+                }
+                if (flag == false) {
+                    result = false;
+                    $("#tfname").after("<span class='err'>Enter vaild name: nothing is valid except alphabets</span>");
+                }
+            }
+            //---------------------------gender-----------------------------
+            if ($("#rdbmale").prop("checked") == false && $("#rdbfemale").prop("checked") == false) {
+                result = false;
+                $("#spgn").after("<span class='err'> Please choose gender</span>");
+            }
+            //----------------------------Email--------------------------------
+            if (email.length == 0) {
+                result = false;
+                $("#temail").after("<span class='err'>Please enter vaild Email Id</span>");
+            }
+            else {
+                if (email.indexOf('@@') <= 0) {
+                    result = false;
+                    $("#temail").after("<span class='err'>Please inculde @@</span>");
+                }
+                else {
+                    var dot = email.indexOf('.');
+                    if (!(dot > 2 && (email.length - dot) >= 3)) {
+                        result = false;
+                        $("#temail").after("<span class='err'>Please enter valid Email ID</span>")
+                    }
+                }
+            }
+
+            //---------------------------------mobile number------------------------
+            if (mob.length == 0) {
+                result = false;
+                $("#tmob").after("<span class='err'>Enter valid mobile number</span>");
+            }
+            else if (mob.length != 10) {
+                result = false;
+                $("#tmob").after("<span class='err'>Enter 10 digit mobile number</span>");
+            }
+            else {
+                fchar = mob.charCodeAt(0);
+                if (!(fchar >= 54 && fchar <= 57)) {
+                    result = false;
+                    $("#tmob").after("<span class='err'>Enter valid indian number</span>");
+                }
+            }
+
+            //--------------------------Current Address-----------------------
+            if (caddress.length == 0) {
+                result = false;
+                $("#tcaddress").after("<span class='err'>Enter your current address</span>");
+            }
+            //--------------------------Permanent Address-----------------------
+            if (paddress.length == 0) {
+                result = false;
+                $("#tpaddress").after("<span class='err'>Enter your permanent address</span>");
+            }
+
+            //--------------------------------Password--------------------------
+            if (pass.length == 0) {
+                result = false;
+                $("#tpass").after("<span class='err'>Enter password</span>");
+            }
+            else if (pass.length < 8) {
+                result = false;
+                $("#tpass").after("<span class='err'>Password length is less</span>");
+            }
+            else {
+                var spcount = 0, dgcount = 0, upcount = 0, lwcount = 0;
+                for (x = 0; x < pass.length; x++) {
+                    var ascii = pass.charCodeAt(x);
+                    if (ascii >= 65 && ascii <= 97)
+                        upcount++;
+                    else if (ascii >= 97 && ascii <= 122)
+                        lwcount++;
+                    else if (ascii >= 48 && ascii <= 57)
+                        dgcount++;
+                    else
+                        spcount++;
+                }
+                if (!(upcount >= 1 && lwcount >= 1 && dgcount >= 1 && spcount >= 1)) {
+                    result = false;
+                    $("#tpass").after("<span class='err'>Password must have 1 uppercase 1 lowercase and a special character</span>");
+                }
+            }
+            //--------------------------------------cpassword------------------------------------------
+            if (cpass.length == 0) {
+                result = false;
+                $("#tcpass").after("<span class='err'>Re - Enter password</span>");
+            }
+            else if (pass != cpass) {
+                result = false;
+                $("#tcpass").after("<span class='err'>Password and confrom passowrd must be same</span>");
+            }
+            // return result;
+            if (result == true) {
+                if (status == true)
+                    $("#btnsave").prop("disabled", false);
+                else
+                    $("#btnsave").prop("disabled", true);
+            }
+            else {
+                $('#chk').prop('checked', false);
+                $("#btnsave").prop("disabled", true);
+
+            }
+        });
+        $("#chkadd").change(function () {
+            var status = $("#chkadd").prop("checked");
+            if (status == true) {
+                $("#tpaddress").val($("#tcaddress").val());
+            }
+            else {
+                $("#tpaddress").val(""); //to clear the textarea if checkbox is not selected
+            }
+        });
+
+
+    });
+</script>
+
+<style>
+    .btn-warning {
+        background-color: #6f1a07ff;
+        border: none;
+        color: white;
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+
+        .btn-warning:hover {
+            background-color: #55828bff;
+            color: white;
+        }
+    .err{
+        color:red;
+
+    }
+    #maind {
+        color: black;
+        margin-top: 25px;
+        margin-bottom: 25px;
+        box-shadow: rgba(209,211,224,0.25)0px 24px 25px, rgba(209,211,224,0.12) 0px -12px 10px, rgba(209,211,224,0.12) 0px 4px 6px, rgba(209,211,224,0.17) 0px 12px 13px, rgba(209,211,224,0.09) 0px -3px 5px;
+    }
+
+    a {
+        color: black;
+        text-decoration: none;
+    }
+
+    .frame {
+        min-height: 450px;
+    }
+
+    #sideframe {
+        text-align: center;
+        vertical-align: central;
+        background-color: #a8763eff;
+        box-shadow: rgba(209,211,224,0.25)0px 25px 25px, rgba(209,211,224,0.12) 0px -12px 10px, rgba(209,211,224,0.12) 0px 4px 6px, rgba(209,211,224,0.17) 0px 12px 13px, rgba(209,211,224,0.09) 0px -3px 5px;
+    }
+
+        #sideframe span {
+            font-size: 20px;
+        }
+
+        #sideframe h2 {
+            font-size: 40px;
+        }
+</style>
+<div class="row" id="backcover">
+    <div class="col-sm-2"></div>
+    <!--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=---------------------MAIN-----------------=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=------------>
+    <div class="col-sm-8" id="maind">
+        <div class="row" style="min-height:500px;">
+            <div class="col-sm-5 frame text-center" id="sideframe">
+
+                <div class="text-center p-0 m-0">
+                    <img src="/Content/images/lostfoundimage.png" height="300" />
+                </div>
+                <h1>Welcome Back!!</h1>
+                <br />
+                <span>To keep connected with us please login <br />with your personal info</span>
+                <br />
+                @Html.ActionLink("Be Connected", "Login", "General", new { @class = "btn btn-warning my-2" })
+
+            </div>
+            <div class="col-sm-7 py-2 frame">
+                <h2 style="color: #1D3774;">Registration</h2>
+                <span style="">@ViewBag.msg</span>
+                <form action="/General/Register" method="post">
+                    <div class="row mb-3">
+                        <div class="col-sm-6">
+                            <span>Name</span>
+                            <input type="text" id="tname" name="Name" placeholder="Enter Your Name" class="form-control">
+                        </div>
+                        <div class="col-sm-6 py-3">
+                            <span>
+                                Gender:&nbsp;
+                                Male &nbsp;<input type="radio"  name="Gender" id="rdbmale" value="Male" class="form-check-input">&nbsp;
+                                Female &nbsp;<input type="radio" name="Gender" id="rdbfemale" value="Female" class="form-check-input">
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row mb-3"> 
+                        <div class="col-sm-6">
+                            <span>Date of Birth</span>
+                            <input type="date" name="DOB" class="form-control">
+                        </div>
+                        <div class="col-sm-6">
+                            <span>Contact Number</span>
+                            <input type="number" name="MobileNo" id="tmob" placeholder="Contact" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-6">
+                            <span>Email Id</span>
+                            <input type="email" name="EmailId" id="temail" placeholder="Email" class="form-control">
+                        </div>
+                        <div class="col-sm-6">
+                            <span>Father's Name</span>
+                            <input type="text" name="FatherName" id="tfname" placeholder="Father's Name" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-6">
+                            <span>Current Address</span>
+                            <textarea cols="22" name="CurrAddress" id="tcaddress" rows="3" placeholder="Current Address" class="form-control"></textarea>
+                           <br /> <input type="checkbox" id="chkadd" /><span>Permanent Address would be same</span>
+                        </div>
+                        <div class="col-sm-6">
+                            <span>Permanent Address</span>
+                            <textarea cols="22" name="PerAddress" id="tpaddress" rows="3" placeholder="Permanent Address" class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-6">
+                            <span>Password</span>
+                            <input type="password" name="Pass" id="tpass" placeholder="Password" class="form-control">
+                        </div>
+                        <div class="col-sm-6">
+                            <span>Confirm Password</span>
+                            <input type="password" name="ConfPass" id="tcpass" placeholder="Confirm Password" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-sm-6">
+                            <img id="ImgCaptcha" width="150" height="40" src="/Content/CaptchaImages/@ViewBag.img" />
+                            <img id="ImgRefresh" width="40" height="40" src="/Content/images/refreshCaptcha.png" style="cursor:pointer" />
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="text" name="TxtCaptcha" placeholder="Captche Code" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row mb-3" style="text-align: center;">
+                        <div class="col-sm-12">
+                            <input type="checkbox" id="chk">&nbsp;<span>Accept <a href="#">privacy policy</a> and <a href="#">terms</a></span>
+                        </div>
+                    </div>
+                    <div class="row mb-3" style="text-align: center;">
+                        <div class="col-sm-6">
+                            <input type="submit" value="Create Account" disabled="true" id="btnsave" class="btn btn-success btn-md">
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="reset" value="Reset" class="btn btn-warning btn-md">
+                        </div>
+                    </div>
+                </form>
+                <hr>
+                <div class="row mb-3" style="text-align: center;">
+                    <div class="col-sm-12">
+                        Already have an account? @Html.ActionLink("Sign in", "Login", "General")
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-2"></div>
+</div>

@@ -1,0 +1,97 @@
+﻿
+@{
+    ViewBag.Title = "MyProfile";
+    Layout = "~/Views/Shared/User_Zone_Layout.cshtml";
+}
+
+@using LostnLocated.Models;
+@model UserMaster
+<style>
+    .formb {
+        border-radius: 10px;
+        color: #1D3774;
+        box-shadow: 5px 5px 12px 0px rgba(0,0,0,0.39);
+        background-color: white;
+        border-radius: 15px;
+        margin-bottom: 20px;
+        margin-top: 20px;
+        padding-top: 15px;
+        padding-bottom: 10px;
+    }
+
+    .back {
+       
+    }
+</style>
+<div class="row back">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-8 formb">
+        <h2 class="text-center">My Profile</h2><hr />
+        <p class="text-center text-bg-danger text-light">@ViewBag.Message</p>
+        <br />
+        <form action="/User/MyProfile" method="post" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-8">
+                    <div class="mb-3">
+                        <span>EmailId:</span>&emsp;<span>@Model.EmailId</span>
+                    </div>
+                    <div class="mb-3">
+                        <span>Name</span>&emsp;
+                        @Html.TextBox("Name", Model.Name, new { @class = "form-control" })
+                    </div>
+                    <div class="mb-3">
+                        <span>
+                            Gender:&nbsp;
+                        </span>
+                        <span class="form-contro">
+                            @if (Model.Gender == "Male")
+                            {
+                                <input type="radio" name="Gender" value="Male" checked class="form-check-input"><span>Male</span>
+                                <input type="radio" name="Gender" value="Female" class="form-check-input"><span>Female</span>
+                            }
+                            else
+                            {
+                                <input type="radio" name="Gender" value="Male" class="form-check-input"><span>Male</span>
+                                <input type="radio" name="Gender" value="Female" checked class="form-check-input"><span>Female</span>
+                            }
+                        </span>
+                    </div>
+                    <div class="mb-3">
+                        <span>Father's Name</span>&emsp;
+                        @Html.TextBox("FatherName", Model.FatherName, new { @class = "form-control" })
+                    </div>
+                    <div class="mb-3">
+                        <span>DOB</span>&emsp;
+                        @Html.TextBox("DOB", Model.DOB, new { @class = "form-control", type = "date" })
+                    </div>
+                    <div class="mb-3">
+                        <span>Contact</span>&emsp;
+                        @Html.TextBox("MobileNo", Model.MobileNo, new { @class = "form-control", type = "number" })
+                    </div>
+                    <div class="mb-3">
+                        <span>Current Address</span>&emsp;
+                        @Html.TextArea("CurrAddress", Model.CurrAddress, new { @class = "form-control" })
+                    </div>
+                    <div class="mb-3">
+                        <span>Permanent Address</span>&emsp;
+                        @Html.TextArea("PerAddress", Model.PerAddress, new { @class = "form-control" })
+                    </div>
+                    <div class="mb-3">
+                        <span class="text-primary">You registered on</span>&emsp;
+                        @Model.RegDate
+                    </div>
+                </div>
+                <div class="col-sm-2"></div>
+            </div>
+            <div class="row mb-3" style="text-align: center;">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-8">
+                    <input type="submit" id="btnsave" value="Update Profile" class="btn btn-warning btn-md form-control">
+                </div>
+                <div class="col-sm-2"></div>
+            </div>
+        </form>
+    </div>
+    <div class="col-sm-2"></div>
+</div>

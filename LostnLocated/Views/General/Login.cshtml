@@ -1,0 +1,141 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/General_Layout.cshtml";
+}
+
+
+
+<style>
+
+    #formback {
+        color: black;
+        margin-top: 25px;
+        margin-bottom: 25px;
+       
+        box-shadow: rgba(209,211,224,0.25)0px 54px 55px, rgba(209,211,224,0.12) 0px -12px 10px, rgba(209,211,224,0.12) 0px 4px 6px, rgba(209,211,224,0.17) 0px 12px 13px, rgba(209,211,224,0.09) 0px -3px 5px;
+
+    }
+
+    a {
+        color: black;
+        text-decoration: none;
+    }
+
+    #icon {
+        margin-bottom: -7px;
+    }
+
+    #icon2 {
+        margin-bottom: -7px;
+    }
+
+
+    .form-text {
+        color: black;
+    }
+
+    .button {
+        text-align: center;
+    }
+
+    .fp {
+        text-align: right;
+    }
+
+    .signup {
+        text-align: center;
+    }
+
+    .frame {
+        min-height: 450px;
+    }
+
+    #sideframe {
+        background-color: #a8763eff;
+        text-align: center;
+        box-shadow: rgba(209,211,224,0.25)0px 24px 25px, rgba(209,211,224,0.12) 0px -12px 10px, rgba(209,211,224,0.12) 0px 4px 6px, rgba(209,211,224,0.17) 0px 12px 13px, rgba(209,211,224,0.09) 0px -3px 5px;
+        margin-top: 25px;
+        margin-bottom: 25px;
+    }
+
+    span {
+        font-size: 25px;
+    }
+
+    h2 {
+        font-size: 40px;
+    }
+    .btn-warning {
+        background-color: #6f1a07ff;
+        border: none;
+        color: white;
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+
+        .btn-warning:hover {
+            background-color: #55828bff;
+            color: white;
+        }
+</style>
+
+<div class="row whole my-5">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-8">
+        <div class="row formback py-2">
+            <div class="col-sm-6 frame" id="sideframe">
+                <br /><br /><br />
+                <br /><br />
+                <br />
+                <h2>Hello!!!</h2>
+                <span style="">Enter your personal details and <br />start journey with us</span><br /><br />
+                @Html.ActionLink("Get Started", "Register", "Home", new { @class = "btn btn-warning" })
+            </div>
+
+            <div class="col-sm-6 frame py-2" id="formback">
+                <h1 style="color: #3b6064ff;">Login</h1>
+                <span>@ViewBag.res</span>
+                <form action="/General/Login" method="post">
+                    <div class="mb-3">
+                        <lord-icon src="https://cdn.lordicon.com/hbvyhtse.json"
+                                   trigger="hover"
+                                   colors="primary:#ffffff"
+                                   style="width:35px;height:25px"
+                                   id="icon">
+                        </lord-icon>
+                        <label for="exampleInputEmail1" class="form-label">Email address</label>
+                        <input type="email" name="UserId" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                    </div>
+                    <div class="mb-3">
+                        <lord-icon src="https://cdn.lordicon.com/jxwksgwv.json"
+                                   trigger="hover"
+                                   colors="primary:#ffffff"
+                                   style="width:35px;height:25px"
+                                   id="icon2">
+                        </lord-icon>
+                        <label for="exampleInputPassword1" class="form-label">Password</label>
+                        <input type="password" name="Pass" class="form-control" id="exampleInputPassword1">
+                        <br />
+                        <div class="mb-3">
+                            <select name="UserType" class="form-select">
+                                <option selected disabled>---Select User Type---</option>
+                                <option value="USER">User</option>
+                                <option value="ADMIN">Admin</option>                           
+                            </select>
+                        </div>
+                        <p class="fp"><a href="#">Forgot Password?</a></p>
+                    </div>
+                    <div class="mb-3 button">
+                        <input type="submit" class="btn btn-warning" style="" value="LOGIN">
+                    </div>
+                </form>
+                <div class="row signup">
+                    <p>or @Html.ActionLink("Sign Up", "Register", "General")</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-2"></div>
+</div>

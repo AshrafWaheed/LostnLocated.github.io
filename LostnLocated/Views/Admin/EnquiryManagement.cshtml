@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewBag.Title = "EnquiryManagement";
+    Layout = "~/Views/Shared/Admin_Zone_Layout.cshtml";
+}
+@using LostnLocated.Models
+@model IEnumerable<EnquiryMaster>
+
+
+<h2 class=" fw-bold text-center my-5">EnquiryManagement</h2>
+ 
+<div class="row my-3" style="background-color: #f7f3e3ff;">
+    <div class="col-sm-12 table-responsive-sm">
+        <table class="table table-hover table-striped">
+
+            <tr style="background-color: #a8763eff;">
+                <th style="color:white;"><b>EnquiryId</b></th>
+                <th style="color:white;"><b>Name</b></th>
+                <th style="color:white;"><b>Email ID</b></th>
+                <th style="color:white;"><b>Mobile No</b></th>
+                <th style="color:white;"><b>Message</b></th>
+                <th style="color:white;"><b>Enquiry Date</b></th>
+            </tr>
+            
+                @foreach (EnquiryMaster em in Model)
+                {
+                        <tr>
+                            <th>@em.EnquiryId </th>
+                            <td>@em.Name</td>
+                            <td>@em.EmailId</td>
+                            <td>@em.MobileNo</td>
+                            <td>@em.Message</td>
+                            <td>@em.EnquityDT</td>
+                        </tr>
+
+                }
+        </table>
+
+    </div>
+
+</div>

@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewBag.Title = "Feedback";
+    Layout = "~/Views/Shared/User_Zone_Layout.cshtml";
+}
+
+<style>
+  
+
+   
+</style>
+
+<div class="row d-flex align-items-center py-5" style="background-color: #a8763eff;">
+    <div class="col-sm-1"></div>
+    <div class="col-sm-6">
+        <h1><b>Your feedback mean</b></h1> <h1 style="color: #6f1a07ff;"><b>the world to us</b></h1><h1><b> </b></h1> <h1><b>Give Your valueable feedback to help us improve our services</b></h1>
+    </div>
+    <div class="col-sm-4 text-center">
+        <img src="/Content/images/feedbackq.png" height="400" />
+    </div>
+    <div class="col-sm-1"></div>
+</div>
+
+<div class="row">
+    <div class="col-sm-3"></div>
+    <div class="col-sm-6 py-2 my-5">
+        <div class="row">   
+            <div class="col-sm-12 py-2" style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; background-color: #f7f3e3ff;">
+                <h2 class="text-center">Feedback Form</h2><hr />
+                <p>@ViewBag.Msg</p>
+                <form action="/User/Feedback" method="post">
+                    <div class="mb-3">
+                        <span>Title</span>&emsp;
+                        <input type="text" name="FeedTitle" class="form-control" placeholder="Title of Feedback">
+                    </div>
+                    <div class="mb-3">
+                        <span>Describe</span>&emsp;
+                        <textarea cols="22" rows="3" name="FeedText" placeholder="Give Your Feedback in detail" class="form-control"></textarea>
+                    </div>
+                    <div class="mb-3 button">
+                        <button type="submit" class="btn btn-warning btn-lg">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3"></div>
+</div>
+

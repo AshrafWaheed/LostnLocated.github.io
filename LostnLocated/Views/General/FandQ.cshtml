@@ -1,0 +1,127 @@
+﻿
+@{
+    ViewBag.Title = "FandQ";
+    Layout = "~/Views/Shared/General_Layout.cshtml";
+}
+
+<style>
+    #faq {
+        text-align: center;
+        font-size: 50px;
+        color: white;
+    }
+
+    #tst {
+        text-align: center;
+        font-size: 20px;
+        color: white;
+    }
+
+    #whole {
+        background-color:#a8763eff;
+    }
+    .accordion-body {
+        background-color: #f7f3e3ff;
+    }
+</style>
+
+<div class="row" id="whole">
+    <div class="col-sm-12">
+        <div class="row">
+            <div class="col-sm-12">
+                <p id="faq">FAQ</p>
+                <p id="tst">Frequently Asked Question</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-8">
+                <div class="accordion accordion-flush" id="accordionFlushExample">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                <b>How do I place a report?</b>
+                            </button>
+                        </h2>
+                        <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">
+                                You can create the ads from the lost and found network's website. On the other hand, by following the three given steps you can do the same from the mobile app.
+                                <br>
+                                Register: If you have registered already, you can use the same account. Otherwise, you will need to register with your Email id and contact number.
+                                <br>
+                                Confirm your Registration: Confirm the account through the verification link which has sent to the provided email address.
+                                <br>
+                                Start Reporting: You can start creating the free ad for the lost or found items now to claim the item or hand over it to the rightful owner.
+                                <br>
+                                Instructions
+                                <ul>
+                                    <li>Choose the relevant category, subcategory, and type</li>
+                                    <li>Give a clear description with additional details of the lost/found thing</li>
+                                    <li>Enter the exact location of where you lost/found</li>
+                                    <li>If applicable, mention the serial number, document number, etc</li>
+                                    <li>Add extra reward, if you want to give a reward to the found reporter</li>
+                                    <li>Choose the right city</li>
+                                    <li>Use the keyword(Tag) properly and upload an image for visibility</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                                <b>What does it cost to advertise?</b>
+                            </button>
+                        </h2>
+                        <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">The publication is 100% free for finders on the website.</div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                                <b>How long will my ad remain on the website?</b>
+                            </button>
+                        </h2>
+                        <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">In general, an ad is automatically deactivated from the website after 3 months. You will receive an email a week before D-Day and another on the day of deactivation. You have the ability to put them online in the following month by logging into your account on the site. After this delay, your ad will be automatically removed permanently from the website.</div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
+                                <b>Is any option to share my ad on social media?</b>
+                            </button>
+                        </h2>
+                        <div id="flush-collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">Yes. You can share your ad to social media. and the option will be available on the info page of every ad. But for the mobile application, the share option will be provided on the home page itself.</div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFive" aria-expanded="false" aria-controls="flush-collapseFive">
+                                <b>How do I claim an item?</b>
+                            </button>
+                        </h2>
+                        <div id="flush-collapseFive" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">You can claim your item by directly contacting the person who has posted it. Meanwhile, you can also contact the lost and found networks team.</div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSix" aria-expanded="false" aria-controls="flush-collapseSix">
+                                <b>How can I search for a lost item?</b>
+                            </button>
+                        </h2>
+                        <div id="flush-collapseSix" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">Visit Lost and found networks. Click on the View more option of the latest ads. Then you can find the Lost items separately. Likewise, you can see the found items separately.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-2"></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12" style="min-height: 98px;"></div>
+        </div>
+    </div>
+</div>

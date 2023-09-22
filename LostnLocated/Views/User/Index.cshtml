@@ -1,0 +1,97 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/User_Zone_Layout.cshtml";
+}
+
+
+@using LostnLocated.Models;
+@model UserMaster
+
+<div class="row d-flex align-items-center py-5" style="background-color: #a8763eff;">
+    <div class="col-sm-1"></div>
+    <div class="col-sm-6">
+        <h1><b>Have you found any Item?</b></h1> <h1 style="color: #6f1a07ff;"><b>Have you lost any item?</b></h1><h1><b> </b></h1> <h1><b>Post below and let our community find it for you</b></h1>
+    </div>
+    <div class="col-sm-4 text-center">
+        <img src="/Content/images/lostfoundimage2.png" height="400"/>
+    </div>
+    <div class="col-sm-1"></div>
+</div>
+
+
+<div class="row my-5">
+    <div class="col-sm-2"></div>
+    
+    <div class="col-sm-8">
+        <h1 class="text-center"> Post Lost And Found</h1>
+        @ViewBag.msg
+        <div class="row py-3" style="padding-left: 20px; padding-right: 20px; background-color: #f7f3e3ff; border-radius:10px;">
+            <div class="col-sm-12">
+                <form action="/User/Index" method="post" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">User Id</label>
+                        <span>@ViewBag.userid</span>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Post Type</label>
+                        <select class="form-select" name="PostType">
+                            <option selected disabled>---Select Post Type---</option>
+                            <option value="LOST">Lost</option>
+                            <option value="FOUND">Found</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Goods Category</label>
+                        <select class="form-select" name="GoodsCategory">
+                            <option selected disabled>---Select Goods Type---</option>
+                            <option>Phone</option>
+                            <option>People</option>
+                            <option>Pets</option>
+                            <option>Automobile</option>
+                            <option>Bags</option>
+                            <option>Documents</option>
+                            <option>Laptop</option>
+                            <option>Jwellery</option>
+                            <option>Fashion Accessories</option>
+                            <option>Keys</option>
+                            <option>Clothes</option>
+                            <option>Watches</option>
+                            <option>Others</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Address</label>
+                        <textarea cols="22" rows="3" name="SpecifyAddress" placeholder="Where you lost or found material specify address" id="tcaddress" class="form-control"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Pincode</label>
+                        <input type="number" name="Pincode" class="form-control" placeholder="Pincode">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Describe</label>
+                        <textarea cols="22" rows="3" name="Description" placeholder="Describe about lost and found" class="form-control"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Date of Lost or Found</label>
+                        <input type="date" name="DateOfFoundLost" id="tdob" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Time of Lost Found</label>
+                        <input type="time" name="TimeOfFoundLost" id="tdob" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Upload</label>
+                        <input type="file" name="GoodsPicName" id="" class="form-control" placeholder="Pic of Goods">
+                    </div>
+                    <div class="row mb-3 my-2" style="">
+                        <div class="col-sm-6">
+                            <input type="submit" id="btnsave" value="Post" class="btn btn-warning px-5 btn-md">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-2"></div>
+</div>
